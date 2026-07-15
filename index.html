@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fé na Bíblia</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts para uma tipografia elegante e acolhedora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcfbfa;
+            color: #2c2c2c;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Lora', serif;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #f8fafc;
+            padding: 1rem 0;
+            border-bottom: 5px solid #d97706; /* Detalhe em tom dourado/terra */
+        }
+        .card-post {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .card-post:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-read-more {
+            color: #d97706;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .btn-read-more:hover {
+            color: #b45309;
+            text-decoration: underline;
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 2rem auto 0 auto;
+        }
+        .search-input-hero {
+            border-radius: 30px !important;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid transparent;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        .search-input-hero:focus {
+            border-color: #d97706;
+            box-shadow: 0 0 0 0.25rem rgba(217, 119, 6, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Hero com Busca Centralizada -->
+    <header class="hero-section text-center">
+        <div class="container px-4">
+            <span class="text-warning text-uppercase fw-bold tracking-wider small">Carlos & Fabiano</span>
+            <h1 class="display-4 fw-bold mt-2 mb-3">Fé na Bíblia</h1>
+            <p class="lead text-muted-light mx-auto" style="max-width: 600px; color: #cbd5e1;">
+                Espaço dedicado à reflexão bíblica, estudos práticos e palavras de esperança para o seu dia a dia.
+            </p>
+            
+            <!-- Campo de Busca Centralizado -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="form-control search-input-hero text-center" placeholder="🔍 Buscar por palavra-chave (Fé, Paz, Graça...)" onkeyup="searchPosts()">
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal (Agora focado nos posts, ocupando o centro de forma elegante) -->
+    <main class="container my-5" style="max-width: 800px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="h4 fw-bold mb-0" id="current-view-title">Últimas Mensagens</h2>
+                    <button class="btn btn-sm btn-outline-secondary d-none" id="btn-clear-filter" onclick="clearFilter()">Ver todas</button>
+                </div>
+                
+                <!-- Container de Posts (Gerados via JS) -->
+                <div class="row g-4" id="posts-container">
+                    <!-- JS vai renderizar os posts aqui -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Visualização da Mensagem Completa -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-2 px-4 px-md-5">
+                    <p class="text-muted small mb-1" id="modal-date">00 de Janeiro, 2026</p>
+                    <h2 class="fw-bold mb-4 font-serif" id="modal-title">Título da Mensagem</h2>
+                    
+                    <!-- Versículo em destaque -->
+                    <div class="p-4 bg-light border-start border-warning border-4 rounded mb-4" id="modal-verse-box">
+                        <blockquote class="blockquote mb-0 italic font-serif" style="font-style: italic;">
+                            <p class="mb-2" id="modal-verse">"O Senhor é o meu pastor..."</p>
+                            <footer class="blockquote-footer mt-1" id="modal-reference">Salmo 23:1</footer>
+                        </blockquote>
+                    </div>
+
+                    <div class="lh-lg" id="modal-content" style="font-size: 1.1rem; color: #374151;">
+                        <!-- Texto principal -->
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 px-4 px-md-5 pb-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-dark text-secondary py-4 mt-5 text-center">
+        <div class="container">
+            <p class="mb-0 small">&copy; 2026 Sementes da Palavra. Feito com simplicidade e propósito.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle (com Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Lógica de Dados e Renderização -->
+    <script>
+        // ==========================================
+        //  SEUS POSTS (Basta adicionar novos aqui!)
+        // ==========================================
+        const posts = [
+
+        {
+                id: 2,
+                title: "Como encontrar descanso nas lutas da vida",
+                date: "15 de Julho, 2026",
+                verse: "Mas os que esperam no Senhor renovarão as forças, subirão com asas como águias; correrão, e não se cansarão; caminharão, e não se fatigarão",
+                reference: "Isaías 40:31",
+                content: `<p>- Venham a mim, todos vocês que estão cansados de carregar as suas pesadas cargas, e eu lhes darei descanso.  Sejam meus seguidores e aprendam comigo porque sou bondoso e tenho um coração humilde, e vocês encontrarão descanso.  Os deveres que eu exijo de vocês são fáceis, e a carga que eu ponho sobre vocês é leve.</p>
+                <p><strong>Mateus 11:28-30</strong></p>
+                <p>Será que vocês não sabem?</p>
+                <p>Será que nunca ouviram falar disso?</p>
+                <p>O Senhor é o Deus Eterno, Ele criou o mundo inteiro.</p>
+                <p>Ele não se cansa, não fica fatigado e ninguém pode medir a sua sabedoria.</p>
+                <p>Aos cansados ele dá novas forças e enche de energia os fracos.</p>
+                <p>Até os jovens se cansam, e os moços tropeçam e caem, mas os que confiam no Senhor recebem sempre novas forças.</p>
+                <p>Voam nas alturas como águias, correm e não perdem as forças, andam e não se cansam.</p>
+                <p><strong>Isaías 40:28-31</strong></p>`,
+                summary: "Viver é lutar, e o cansaço vem.  Muitas pessoas se cansam pelos caminhos da vida.  Você quer saber como ter descanso mesmo na luta?"
+            },
+
+/*            {
+                id: 1,
+                title: "O Segredo da Verdadeira Paz",
+                date: "15 de Julho, 2026",
+                verse: "Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá. Não se turbe o vosso coração, nem se atemorize.",
+                reference: "João 14:27",
+                content: `<p>Vivemos em um mundo acelerado, onde o barulho externo muitas vezes tenta roubar a nossa tranquilidade interior. Buscamos paz em circunstâncias favoráveis, no silêncio de um feriado ou na ausência de problemas.</p>
+                          <p>No entanto, a promessa de Jesus vai muito além das circunstâncias. A paz que Ele oferece não depende do que acontece ao nosso redor, mas de Quem habita em nós. É uma paz que guarda a nossa mente nos dias de tempestade.</p>
+                          <p><strong>Aplicação prática:</strong> Quando o medo ou a ansiedade baterem à porta hoje, respire fundo, lembre-se desta promessa e entregue suas preocupações a Deus em oração.</p>`,
+                summary: "A paz que Jesus oferece não depende de circunstâncias perfeitas, mas de um coração ancorado em Sua presença..."
+            },
+
+
+
+            {
+                id: 3,
+                title: "Ancorados na Esperança",
+                date: "10 de Julho, 2026",
+                verse: "Temos esta esperança como âncora da alma, firme e segura...",
+                reference: "Hebreus 6:19",
+                content: `<p>A âncora é uma ferramenta indispensável para um navio quando a tempestade aperta. Ela não impede o vento de soprar, nem as ondas de baterem contra o casco, mas garante que a imagem da embarcação não seja levada pelas correntes em direção às rochas.</p>
+                          <p>Da mesma forma, as promessas de Deus agem como essa âncora para a nossa mente e para as nossas emoções. Quando o futuro parecer incerto, lembre-se de que a sua esperança está firmada no caráter imutável Daquele que prometeu.</p>`,
+                summary: "Descubra como manter as emoções e a mente firmes mesmo diante das maiores tempestades da vida."
+            },
+            {
+                id: 4,
+                title: "A Sabedoria que Vem do Alto",
+                date: "05 de Julho, 2026",
+                verse: "Se algum de vocês tem falta de sabedoria, peça-a a Deus, que a todos dá livremente, de boa vontade; e lhe será concedida.",
+                reference: "Tiago 1:5",
+                content: `<p>Tomar decisões faz parte do nosso cotidiano, desde as escolhas mais triviais até as mais complexas, que definem os rumos de nossas vidas e carreiras.</p>
+                          <p>A sabedoria humana busca respostas rápidas e vantagens imediatas. Já a sabedoria que vem de Deus é pacífica, amável, cheia de misericórdia e de bons frutos. O segredo para recebê-la é a humildade de reconhecer que precisamos dela e pedir com fé.</p>`,
+                summary: "Como alinhar nossas decisões diárias com a direção de Deus para evitar caminhos frustrantes."
+            }*/
+
+
+
+        ];
+
+        // ==========================================
+        //  Lógica de Renderização e Filtros
+        // ==========================================
+        const postsContainer = document.getElementById('posts-container');
+        const currentViewTitle = document.getElementById('current-view-title');
+        const btnClearFilter = document.getElementById('btn-clear-filter');
+
+        // Renderiza a lista de posts na tela
+        function renderPosts(filteredPosts = posts) {
+            postsContainer.innerHTML = '';
+            
+            if (filteredPosts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted fs-5">Nenhuma mensagem encontrada para essa busca.</p>
+                    </div>`;
+                return;
+            }
+
+            filteredPosts.forEach(post => {
+                const card = `
+                    <div class="col-12">
+                        <article class="card card-post p-4 p-md-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">${post.date}</small>
+                                <span class="text-muted small font-serif"><em>${post.reference}</em></span>
+                            </div>
+                            <h3 class="h2 fw-bold font-serif mb-3">${post.title}</h3>
+                            <p class="text-muted mb-4">${post.summary}</p>
+                            <div class="d-flex justify-content-end">
+                                <a href="#" class="btn-read-more" onclick="openPost(${post.id}); event.preventDefault();">Ler reflexão &rarr;</a>
+                            </div>
+                        </article>
+                    </div>
+                `;
+                postsContainer.insertAdjacentHTML('beforeend', card);
+            });
+        }
+
+        // Abre a mensagem no modal
+        function openPost(id) {
+            const post = posts.find(p => p.id === id);
+            if (!post) return;
+
+            document.getElementById('modal-title').textContent = post.title;
+            document.getElementById('modal-date').textContent = post.date;
+            document.getElementById('modal-verse').textContent = `"${post.verse}"`;
+            document.getElementById('modal-reference').textContent = post.reference;
+            document.getElementById('modal-content').innerHTML = post.content;
+
+            const modal = new bootstrap.Modal(document.getElementById('postModal'));
+            modal.show();
+        }
+
+        // Limpa todos os filtros ativos
+        function clearFilter() {
+            currentViewTitle.textContent = "Últimas Mensagens";
+            btnClearFilter.classList.add('d-none');
+            document.getElementById('search-input').value = '';
+            renderPosts();
+        }
+
+        // Busca em tempo real por título, conteúdo, referência ou versículo
+        function searchPosts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            if (query === '') {
+                clearFilter();
+                return;
+            }
+
+            const filtered = posts.filter(post => 
+                post.title.toLowerCase().includes(query) || 
+                post.content.toLowerCase().includes(query) || 
+                post.verse.toLowerCase().includes(query) ||
+                post.reference.toLowerCase().includes(query)
+            );
+
+            currentViewTitle.textContent = `Resultados para: "${query}"`;
+            btnClearFilter.classList.remove('d-none');
+            renderPosts(filtered);
+        }
+
+        // Inicialização do app
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPosts();
+        });
+    </script>
+</body>
+</html>
