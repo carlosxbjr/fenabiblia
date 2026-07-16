@@ -68,7 +68,7 @@
     <!-- Header / Hero com Busca Centralizada -->
     <header class="hero-section text-center">
         <div class="container px-4">
-            <span class="text-warning text-uppercase fw-bold tracking-wider small">Carlos & Fabiano</span>
+            <span class="text-warning text-uppercase fw-bold tracking-wider">Carlos & Fabiano</span>
             <h1 class="display-4 fw-bold mt-2 mb-3">Fé na Bíblia</h1>
             <p class="lead text-muted-light mx-auto" style="max-width: 600px; color: #cbd5e1;">
                 Espaço dedicado à reflexão bíblica, estudos práticos e palavras de esperança para o seu dia a dia.
@@ -86,7 +86,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="h4 fw-bold mb-0" id="current-view-title">Últimas Mensagens</h2>
+                    <!--<h2 class="h4 fw-bold mb-0" id="current-view-title">Últimas Mensagens</h2>-->
                     <button class="btn btn-sm btn-outline-secondary d-none" id="btn-clear-filter" onclick="clearFilter()">Ver todas</button>
                 </div>
                 
@@ -145,6 +145,25 @@
         // ==========================================
         const posts = [
 
+            {
+                id: 2,
+                title: "Em Deus temos nova vida",
+                date: "16 de Julho, 2026",
+                verse: "Creia no Senhor Jesus e você será salvo.",
+                reference: "Atos 16:31",
+                content: `<p>Porque Deus amou o mundo tanto, que deu o seu único Filho, para que todo aquele que Nele crer não morra, mas tenha a vida eterna.  Pois Deus mandou o seu Filho para salvar o mundo e não para julgá-lo.</p>
+                          <p><strong>João 3:16-17</strong></p>
+                          <p>Então Jesus afirmou: - Eu sou à ressureição e a vida.  Quem crê em mim, ainda que morra, viverá, e quem vive e crê em mim nunca morrerá.  Você acredita nisso?</p>
+                          <p><strong>João 11:25-26</strong></p>
+                          <p>Pois o salário do pecado é a morte, mas o presente gratuito de Deus é a vida eterna, que temos em união com Cristo Jesus, o nosso Senhor.</p>
+                          <p><strong>Romanos 6:23</strong></p>
+                          <p>Deus nos deu a vida eterna, e essa vida é nossa por meio do seu Filho.  Quem tem o Filho tem a vida, quem não tem o Filho de Deus não tem a vida</p>
+                          <p><strong>1 João 5:11-12</strong></p>`,
+                summary: "Deus promete a vida eterna a todos os que creem em Jesus Cristo como seu Salvador."
+            },
+
+
+
         {
                 id: 1,
                 title: "Como encontrar descanso nas lutas da vida",
@@ -164,22 +183,6 @@
                 summary: "Viver é lutar, e o cansaço vem.  Muitas pessoas se cansam pelos caminhos da vida.  Você quer saber como ter descanso mesmo na luta?"
             },
 
-            {
-                id: 2,
-                title: "Em Deus temos nova vida",
-                date: "16 de Julho, 2026",
-                verse: "Creia no Senhor Jesus e você será salvo.",
-                reference: "Atos 16:31",
-                content: `<p>Porque Deus amou o mundo tanto, que deu o seu único Filho, para que todo aquele que Nele crer não morra, mas tenha a vida eterna.  Pois Deus mandou o seu Filho para salvar o mundo e não para julgá-lo.</p>
-                          <p><strong>João 3:16-17</strong></p>
-                          <p>Então Jesus afirmou: - Eu sou à ressureição e a vida.  Quem crê em mim, ainda que morra, viverá, e quem vive e crê em mim nunca morrerá.  Você acredita nisso?</p>
-                          <p><strong>João 11:25-26</strong></p>
-                          <p>Pois o salário do pecado é a morte, mas o presente gratuito de Deus é a vida eterna, que temos em união com Cristo Jesus, o nosso Senhor.</p>
-                          <p><strong>Romanos 6:23</strong></p>
-                          <p>Deus nos deu a vida eterna, e essa vida é nossa por meio do seu Filho.  Quem tem o Filho tem a vida, quem não tem o Filho de Deus não tem a vida</p>
-                          <p><strong>1 João 5:11-12</strong></p>`,
-                summary: "Deus promete a vida eterna a todos os que creem em Jesus Cristo como seu Salvador."
-            },
 
 /*
 
